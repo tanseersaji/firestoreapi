@@ -52,6 +52,7 @@ def getUser():
 def store_image():
     if request.method == 'POST':
         imgstr = request.json['image_string']
+        print(imgstr)
         lat = request.json['location_lat']
         lng = request.json['location_long']
         email = request.json['user_email']
