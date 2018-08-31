@@ -5,16 +5,25 @@ from flask import Flask
 from flask import request
 import json
 import time
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 cred = credentials.Certificate('voyage.json')
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
+cloudinary.config( 
+  cloud_name = "dkb1nvu7q", 
+  api_key = "978112495987194", 
+  api_secret = "q31AssaNz2kEbGgp1owhOo5yrdw" 
+)
+
 app = Flask(__name__)
 
 #TODO: check if the user is corrected uploaded
+
 
 @app.route('/adduser',methods=['POST','GET'])
 def addUser():
@@ -40,18 +49,23 @@ def getUser():
 def store_image():
     if request.method == 'POST':
         imgstr = request.json['image_string']
-        lat = request.json['lat']
-        lng = request.json['long']
+        lat = request.json['location_lat']
+        lng = request.json['location_long']
+        email = request.json['user_email']
         current_time = time.time()
         doc_ref = db.collection(u'images').document(u'doc'+str(current_time))
         doc_ref.set({
+            u'user_email':email,
             u'image_id':current_time,
-            u'image_string':imgstr,
+            u'image_link':cloudinary.uploader.upload("data:image/png;base64,"+imgstr),
             u'lat':lat,
             u'long':lng
         })
+        return "200"
+    else:
+        return "403"
 
-
+@app.route('/getallimage')
 def get_all_images():
     images_string_ref = db.collection(u'images')
     docs = images_string_ref.get()
@@ -59,7 +73,7 @@ def get_all_images():
     for doc in docs:
         current_doc = doc.to_dict()
         all_images.append(current_doc)
-    return all_images
+    return json.dumps(all_images)
 
 if __name__ == "__main__":
     app.run()
