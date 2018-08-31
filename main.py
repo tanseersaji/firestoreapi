@@ -3,7 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 from flask import Flask
 from flask import request
-from flask.ext.responses import json_response
+from flask import response
 import json
 import time
 import cloudinary
@@ -66,7 +66,7 @@ def store_image():
             u'lat':lat,
             u'long':lng
         })
-        return json_response({"url":image_link["url"]}, status_code=201)
+        return response({"url":image_link["url"]}, status_code=201)
     else:
         return "403"
 
@@ -106,7 +106,7 @@ def get_image_based_on_lat_long():
                     'lat' :lat1,
                     'long' :lon1
                 })
-        return json.dumps(final_images)
+        return response(json.dumps(final_images), status_code=201)
 
 if __name__ == "__main__":
     app.run()
