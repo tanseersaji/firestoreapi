@@ -52,7 +52,6 @@ def getUser():
 def store_image():
     if request.method == 'POST':
         imgstr = request.json['image_string']
-        print(imgstr)
         lat = request.json['location_lat']
         lng = request.json['location_long']
         email = request.json['user_email']
@@ -66,7 +65,9 @@ def store_image():
             u'lat':lat,
             u'long':lng
         })
-        return str(image_link)
+        return flask.Response(json.dumps({
+        'url': image_link,
+    }), mimetype=u'application/json') 
     else:
         return "403"
 
