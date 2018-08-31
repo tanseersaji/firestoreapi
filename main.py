@@ -66,7 +66,7 @@ def store_image():
             u'lat':lat,
             u'long':lng
         })
-        return response({"url":image_link["url"]}, status_code=201)
+        return json.dumps({'url':image_link['url']})
     else:
         return "403"
 
@@ -106,7 +106,7 @@ def get_image_based_on_lat_long():
                     'lat' :lat1,
                     'long' :lon1
                 })
-        return response(json.dumps(final_images), status_code=201)
+        return json.dumps(final_images)
 
 if __name__ == "__main__":
     app.run()
