@@ -3,7 +3,6 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 from flask import Flask
 from flask import request
-from flask import response
 import json
 import time
 import cloudinary
