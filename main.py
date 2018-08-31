@@ -101,9 +101,9 @@ def get_image_based_on_lat_long():
 
             if(distance<maxDistance):
                 final_images.append({
-                    'string' :image['image_link'],
-                    'lat' :lat1,
-                    'long' :lon1
+                    'string':image['image_link'],
+                    'lat' :image['lat'],
+                    'long' :image['long']
                 })
         return json.dumps(final_images)
 
