@@ -16,9 +16,9 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 cloudinary.config( 
-  cloud_name = "dkb1nvu7q", 
-  api_key = "978112495987194", 
-  api_secret = "q31AssaNz2kEbGgp1owhOo5yrdw" 
+  cloud_name = "", 
+  api_key = "", 
+  api_secret = "" 
 )
 
 maxDistance = 500
